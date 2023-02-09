@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
@@ -27,6 +27,16 @@ public class UserController {
        }catch (Exception ex){
            ex.printStackTrace();
        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> requestMap){
+        try {
+            return  userService.login(requestMap);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
