@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customerUserDetailsService);
     }
-
+    @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
@@ -45,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 .and()
                 .csrf().disable()
-                .authorizeHttpRequests()
-                .antMatchers("/user/login", "/user/signup", "/user/forgotPassword")
+                .authorizeRequests()
+                .antMatchers("/user/login","/user/forgotPassword")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
