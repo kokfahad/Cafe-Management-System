@@ -1,9 +1,7 @@
 package com.fahad.cafeteria.service;
 
-import com.fahad.cafeteria.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -13,4 +11,7 @@ public interface UserService {
     boolean validateSignUpMap(Map<String, String> requestMap);
     ResponseEntity<?> getAllUser();
     ResponseEntity<?> update(Map<String, String> requestMap);
+    ResponseEntity<?> checkToken();
+    ResponseEntity<?> changePassword(Map<String, String> requestMap);
+    ResponseEntity<?> forgotPassword(Map<String, String> requestMap);
 }

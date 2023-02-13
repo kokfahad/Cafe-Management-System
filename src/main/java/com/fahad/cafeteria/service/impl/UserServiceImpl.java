@@ -1,7 +1,6 @@
 package com.fahad.cafeteria.service.impl;
 
 import com.fahad.cafeteria.constent.CafeConstants;
-import com.fahad.cafeteria.dto.UserDTO;
 import com.fahad.cafeteria.jwt.CustomerUserDetailsService;
 import com.fahad.cafeteria.jwt.JwtFilter;
 import com.fahad.cafeteria.jwt.JwtUtil;
@@ -44,9 +43,9 @@ public class UserServiceImpl implements UserService {
         log.info("Inside signup {}", requestMap);
         try {
             if (validateSignUpMap(requestMap)){
-                User user = userRepository.findByEmail(requestMap.get("email"));
+                Optional<User> user = userRepository.findByEmail(requestMap.get("email"));
 
-                if (Objects.isNull(user)){
+                if (!user.isPresent()){
                     userRepository.save(getUserFromMap(requestMap));
                     return CafeUtils.getResponseEntity("Successfully registered !!", HttpStatus.OK);
                 }else {
@@ -126,9 +125,10 @@ public class UserServiceImpl implements UserService {
                 user.get().setStatus(status);
                 userRepository.save(user.get());
 
-                List<String> allAdminEmails = userRepository.findAllAdminEmails("admin");
-                String email = user.get().getEmail();
-                sendMailToAllAdmin(status,email, allAdminEmails);
+//           email integration. will do later
+//                List<String> allAdminEmails = userRepository.findAllAdminEmails("admin");
+//                String email = user.get().getEmail();
+//                sendMailToAllAdmin(status,email, allAdminEmails);
                 return CafeUtils.getResponseEntity("User updated successfully !!" , HttpStatus.OK);
 
             }else{
@@ -141,6 +141,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
     private void sendMailToAllAdmin(String status, String user, List<String> allAdminsEmails) {
          allAdminsEmails.remove(jwtFilter.getCurrentUser());
          if (status != null && status.equalsIgnoreCase("true")){
@@ -150,6 +151,48 @@ public class UserServiceImpl implements UserService {
              emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(),
                      "Account Disbaled", "USER:- " + user + " \n is disabled by \nADMIN:-" + jwtFilter.getCurrentUser(), allAdminsEmails);
          }
+    }
+
+//    use to validate when user travel from one page to another
+//    to check whether he has valid token or not
+    @Override
+    public ResponseEntity<?> checkToken() {
+        return CafeUtils.getResponseEntity("true", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> changePassword(Map<String, String> requestMap) {
+        try {
+           Optional<User>user = userRepository.findByEmail(jwtFilter.getCurrentUser());
+           if (user.isPresent()){
+              if (user.get().getPassword().equals(requestMap.get("oldPassword"))){
+                 user.get().setPassword(requestMap.get("newPassword"));
+                 userRepository.save(user.get());
+                 return CafeUtils.getResponseEntity("Password updated successfully !!", HttpStatus.OK);
+              }
+               return CafeUtils.getResponseEntity("Incorrect old password !!", HttpStatus.INTERNAL_SERVER_ERROR);
+           }
+           return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception ex){
+           ex.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<?> forgotPassword(Map<String, String> requestMap) {
+        try {
+            Optional<User> user = userRepository.findByEmail(requestMap.get("email"));
+
+            if (user.isPresent()){
+               emailUtils.forgotMail(user.get().getEmail(), "Credentials by cafe management system", user.get().getPassword());
+            }
+            return CafeUtils.getResponseEntity("Check your mail for credentials !! ", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
