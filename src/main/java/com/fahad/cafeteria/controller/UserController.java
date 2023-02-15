@@ -1,7 +1,7 @@
 package com.fahad.cafeteria.controller;
 
 import com.fahad.cafeteria.constent.CafeConstants;
-import com.fahad.cafeteria.dto.UserDTO;
+import com.fahad.cafeteria.dto.request.UserDTO;
 import com.fahad.cafeteria.jwt.JwtFilter;
 import com.fahad.cafeteria.service.UserService;
 import com.fahad.cafeteria.utils.CafeUtils;

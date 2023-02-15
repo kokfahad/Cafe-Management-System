@@ -11,4 +11,13 @@ public interface ProductService {
     ResponseEntity<?> getAllProduct();
 
     ResponseEntity<?> updateProduct(Map<String, String> requestMap);
+
+
+    ResponseEntity<?> deleteProduct(Integer id);
+
+    ResponseEntity<?> updateStatus(Map<String, String>requestMap);
+
+    ResponseEntity<?> getByCategory(Integer id);
+
+    ResponseEntity<?> getProductById(Integer id);
 }

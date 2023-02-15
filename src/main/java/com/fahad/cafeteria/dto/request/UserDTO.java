@@ -1,4 +1,4 @@
-package com.fahad.cafeteria.dto;
+package com.fahad.cafeteria.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
