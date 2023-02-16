@@ -32,7 +32,7 @@ public class Bill implements Serializable {
     private String paymentMethod;
 
     @Column(name = "total")
-    private Integer totalAmount;
+    private Integer total;
 
     @Column(name = "product_details", columnDefinition = "json")
     private String productDetails;
