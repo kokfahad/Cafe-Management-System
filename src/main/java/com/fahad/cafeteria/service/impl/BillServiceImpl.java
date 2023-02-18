@@ -48,7 +48,7 @@ public class BillServiceImpl implements BillService {
                         + requestMap.get("email") + "\n" + "Payment Method: " + requestMap.get("paymentMethod");
 
                 Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream(CafeConstants.STORE_LOCATION + "\\" + fileName + ".pdf"));
+                //PdfWriter.getInstance(document, new FileOutputStream(CafeConstants.STORE_LOCATION + "\\" + fileName + ".pdf"));
 
                 document.open();
                 setRectanglePdf(document);
