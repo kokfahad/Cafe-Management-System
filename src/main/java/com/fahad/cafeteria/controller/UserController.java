@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @GetMapping("/checkToken")
-    ResponseEntity<?> checkToken(){
+    public ResponseEntity<?> checkToken(){
         try {
             return userService.checkToken();
         }catch (Exception ex){
