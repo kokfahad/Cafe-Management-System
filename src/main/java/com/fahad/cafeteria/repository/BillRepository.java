@@ -12,5 +12,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query(value = "select * from Bill b order by b.id desc", nativeQuery = true)
     ArrayList<Bill> getAllBills();
 
-    ArrayList<Bill> findByEmailOrderByIdDesc(String currentUser);
+//    ArrayList<Bill> findByEmailOrderByIdDesc(String currentUser);
+
+    ArrayList<Bill> findByCreatedByOrderByIdDesc(String currentUser);
 }

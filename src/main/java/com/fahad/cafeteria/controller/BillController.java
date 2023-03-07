@@ -40,7 +40,7 @@ public class BillController {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/get-pdf")
+    @PostMapping("/getPdf")
     ResponseEntity<?> getPDF(@RequestBody Map<String, Object> requestMap) {
         try {
             return billService.getPDF(requestMap);

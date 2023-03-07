@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
                 if (!user.isPresent()){
                     userRepository.save(getUserFromMap(requestMap));
-                    return CafeUtils.getResponseEntity("Successfully registered !!", HttpStatus.OK);
+                    return CafeUtils.getResponseEntity("Successfully registered !!", HttpStatus.CREATED);
                 }else {
                     return CafeUtils.getResponseEntity("Email already exists !!", HttpStatus.BAD_REQUEST);
                 }

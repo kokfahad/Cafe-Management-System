@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-      ResponseEntity<List<Category>> findByName(String filterValue);
+//      ResponseEntity<List<Category>> findByName();
 
-      @Query(value = "select c from Category where c.id in (select p.category from Product p where p.status = 'true')", nativeQuery = true)
+      @Query(value = "select c from Category c where c.id in (select p.category from Product p where p.status = 'true')", nativeQuery = true)
       List<String> findAllCategory(@Param("filterValue") String filterValue);
 }

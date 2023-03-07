@@ -31,7 +31,7 @@ public class CategoryController {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/get-all-category")
+    @GetMapping("/get")
     ResponseEntity<?> getAllCategory(@RequestParam(required = false) String filterValue){
         try {
            return categoryService.getAllCategory(filterValue);

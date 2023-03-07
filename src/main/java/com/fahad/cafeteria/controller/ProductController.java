@@ -59,7 +59,7 @@ public class ProductController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
         try {
             if (jwtFilter.isAdmin()) {

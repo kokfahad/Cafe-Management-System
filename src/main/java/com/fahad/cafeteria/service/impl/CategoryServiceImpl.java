@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
             if (jwtFilter.isAdmin()) {
                 if (validateCategoryMap(requestMap, false)) {
                     categoryRepository.save(getCategoryFromMap(requestMap, false));
-                    return CafeUtils.getResponseEntity("Category added successfully !!", HttpStatus.OK);
+                    return CafeUtils.getResponseEntity("Category added successfully !!", HttpStatus.CREATED);
                 }
             } else {
                 return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
@@ -48,11 +48,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<?> getAllCategory(String filterValue) {
         try {
-            if (!Strings.isNullOrEmpty(filterValue) && filterValue.equalsIgnoreCase("true")){
-                //will fix this code later
-                List<Category> categoryList = categoryRepository.findByName(filterValue).getBody();
-                return new ResponseEntity<List<Category>>( categoryList,HttpStatus.OK);
-            }
+//            if (!Strings.isNullOrEmpty(filterValue) && filterValue.equalsIgnoreCase("true")){
+//                //will fix this code later
+//                List<Category> categoryList = categoryRepository.findAll();
+//                return new ResponseEntity<List<Category>>( categoryList,HttpStatus.OK);
+//            }
             List<Category> categoryList = categoryRepository.findAll();
             return new ResponseEntity<>(categoryList, HttpStatus.OK);
         }catch (Exception ex){

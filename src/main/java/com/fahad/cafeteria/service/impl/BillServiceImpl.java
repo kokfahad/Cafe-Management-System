@@ -93,7 +93,9 @@ public class BillServiceImpl implements BillService {
         table.addCell((String) data.get("name"));
         table.addCell((String) data.get("category"));
         table.addCell((String) data.get("quantity"));
-        table.addCell((String) data.get(Double.toString((Double) data.get("price"))));
+        String price = data.get("price").toString();
+        table.addCell(price);
+//        table.addCell(Double.toString((Double) data.get("price")));
         table.addCell(Double.toString((Double) data.get("total")));
     }
 
@@ -175,7 +177,7 @@ public class BillServiceImpl implements BillService {
                 list = billRepository.getAllBills();
                 return new ResponseEntity<>(list, HttpStatus.OK);
             } else {
-                list = billRepository.findByEmailOrderByIdDesc(jwtFilter.getCurrentUser());
+                list = billRepository.findByCreatedByOrderByIdDesc(jwtFilter.getCurrentUser());
                 return new ResponseEntity<>(list, HttpStatus.OK);
             }
         } catch (Exception ex) {

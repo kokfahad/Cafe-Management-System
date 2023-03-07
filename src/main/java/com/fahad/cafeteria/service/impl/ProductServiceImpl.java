@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             if (validateProductMap(requestMap, false)) {
                 productRepository.save(getProductFromMap(requestMap, false));
-                return CafeUtils.getResponseEntity("Product added successfully", HttpStatus.OK);
+                return CafeUtils.getResponseEntity("Product added successfully", HttpStatus.CREATED);
             }
             return CafeUtils.getResponseEntity(CafeConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
